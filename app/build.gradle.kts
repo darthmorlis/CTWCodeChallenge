@@ -30,6 +30,25 @@ android {
         buildConfigField("String", "NEWS_API_KEY", "\"$newsApiKey\"")
     }
 
+    // Product Flavors for different news sources
+    flavorDimensions += "newsSource"
+
+    productFlavors {
+        create("bbc") {
+            dimension = "newsSource"
+            applicationIdSuffix = ".bbc"
+            buildConfigField("String", "NEWS_SOURCE_ID", "\"bbc-news\"")
+            buildConfigField("String", "NEWS_SOURCE_NAME", "\"BBC News\"")
+        }
+
+        create("cnn") {
+            dimension = "newsSource"
+            applicationIdSuffix = ".cnn"
+            buildConfigField("String", "NEWS_SOURCE_ID", "\"cnn\"")
+            buildConfigField("String", "NEWS_SOURCE_NAME", "\"CNN\"")
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -37,6 +56,15 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+    }
+
+    // Only keep debug variants for this challenge (hide release variants)
+    androidComponents {
+        beforeVariants { variantBuilder ->
+            if (variantBuilder.buildType == "release") {
+                variantBuilder.enable = false
+            }
         }
     }
     compileOptions {
@@ -48,7 +76,7 @@ android {
     }
     buildFeatures {
         compose = true
-        buildConfig= true
+        buildConfig = true
     }
 }
 

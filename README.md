@@ -7,7 +7,8 @@ The app displays top news headlines from a predefined provider and allows the us
 
 ## 📱 Features
 
-- List of top headlines from a fixed news provider
+- List of top headlines from a configurable news provider
+- **Product Flavors** for different news sources (BBC, CNN)
 - Articles ordered by most recent first
 - Article detail screen with:
   - Image
@@ -61,7 +62,52 @@ NEWS_API_KEY=YOUR_API_KEY_HERE
 1. Clone the repository
 2. Open the project in Android Studio (latest stable version)
 3. Add your `NEWS_API_KEY` as described above
-4. Run on an emulator or physical device (API 34+ recommended)
+4. Select the desired build variant (see Product Flavors below)
+5. Run on an emulator or physical device (API 34+ recommended)
+
+---
+
+## 🔀 Product Flavors
+
+The app supports multiple news sources via **Gradle Product Flavors**. Each flavor is configured at build time.
+
+### Available Variants
+
+| Variant | News Source | Application ID |
+|---------|-------------|----------------|
+| `bbcDebug` | BBC News | `com.example.ctwcodechallenge.bbc` |
+| `cnnDebug` | CNN | `com.example.ctwcodechallenge.cnn` |
+
+### Building Different Flavors
+
+**Via Android Studio:**
+
+1. Open `Build` → `Select Build Variant`
+2. Choose: `bbcDebug` or `cnnDebug`
+3. Run the app
+
+**Via Command Line:**
+
+```bash
+# Build BBC APK
+./gradlew assembleBbcDebug
+
+# Build CNN APK
+./gradlew assembleCnnDebug
+
+# Build all variants
+./gradlew assemble
+
+# Run tests for all flavors
+./gradlew test
+```
+
+### How It Works
+
+- Each flavor defines `NEWS_SOURCE_ID` and `NEWS_SOURCE_NAME` in `BuildConfig`
+- The `NewsSource` object reads these values at compile time
+- No code duplication: UI and ViewModel logic remain unchanged
+- The app title automatically reflects the selected source
 
 ---
 
@@ -76,6 +122,7 @@ NEWS_API_KEY=YOUR_API_KEY_HERE
 | Uses Retrofit and Moshi for networking | ✅ |
 | Clean UI implemented with Jetpack Compose | ✅ |
 | API keys excluded from version control | ✅ |
+| Product Flavors for different news sources | ✅ |
 
 ---
 
