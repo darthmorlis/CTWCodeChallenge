@@ -1,0 +1,6 @@
+# Copy this file to local.properties and add your API key
+# DO NOT commit local.properties to version control
+
+sdk.dir=/path/to/your/android/sdk
+NEWS_API_KEY=YOUR_API_KEY_HERE
+
